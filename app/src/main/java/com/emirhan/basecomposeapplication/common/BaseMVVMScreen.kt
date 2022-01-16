@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.talhafaki.composablesweettoast.util.SweetToastUtil
 
 @Composable
-inline fun <reified T : BaseViewModel> BaseCompose(
+inline fun <reified T : BaseViewModel> BaseMVVMScreen(
     baseViewModel: T = hiltViewModel(),
     content: (@Composable (viewModel: T) -> Unit)
 ) {

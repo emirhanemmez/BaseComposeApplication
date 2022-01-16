@@ -2,7 +2,7 @@ package com.emirhan.basecomposeapplication.domain.use_case
 
 import android.util.Log
 import com.emirhan.basecomposeapplication.common.Resource
-import com.emirhan.basecomposeapplication.data.remote.dto.PokemonCard
+import com.emirhan.basecomposeapplication.domain.model.Pokemon
 import com.emirhan.basecomposeapplication.domain.repository.PokemonRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,10 +13,10 @@ import javax.inject.Inject
 class GetPokemonsUseCase @Inject constructor(
     private val repository: PokemonRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<PokemonCard>>> = flow {
+    operator fun invoke(): Flow<Resource<List<Pokemon>>> = flow {
         try {
             emit(Resource.Loading())
-            val pokemons = repository.getPokemons().cards
+            val pokemons = repository.getPokemons().cards.map { it.toPokemon() }
             emit(Resource.Success(pokemons))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))

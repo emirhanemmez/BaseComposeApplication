@@ -5,6 +5,8 @@ import com.emirhan.basecomposeapplication.common.Constants
 import com.emirhan.basecomposeapplication.data.remote.PokemonApi
 import com.emirhan.basecomposeapplication.data.repository.PokemonRepositoryImpl
 import com.emirhan.basecomposeapplication.domain.repository.PokemonRepository
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,4 +60,8 @@ object AppModule {
     fun providePokemonRepository(api: PokemonApi): PokemonRepository {
         return PokemonRepositoryImpl(api)
     }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson = GsonBuilder().create()
 }

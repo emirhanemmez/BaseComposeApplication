@@ -1,7 +1,10 @@
 package com.emirhan.basecomposeapplication.data.remote.dto
 
+import android.os.Parcelable
 import com.emirhan.basecomposeapplication.domain.model.Pokemon
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class PokemonCard(
     val artist: String,
     val attacks: List<Attack>,
@@ -22,7 +25,7 @@ data class PokemonCard(
     val supertype: String,
     val types: List<String>,
     val weaknesses: List<Weakness>
-) {
+) : Parcelable {
     fun toPokemon(): Pokemon =
         Pokemon(
             id = id,
