@@ -22,8 +22,8 @@ class PokemonListViewModel @Inject constructor(
         getPokemons()
     }
 
-    private fun getPokemons() {
-        handleRequest(getPokemonsUseCase(), {
+    fun getPokemons(hp: String = "99") {
+        handleRequest(getPokemonsUseCase(hp), {
             mutableState.value = BaseResponseState(it)
         })
     }

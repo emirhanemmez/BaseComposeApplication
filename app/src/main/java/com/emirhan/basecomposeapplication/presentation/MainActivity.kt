@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                             route = Screen.PokemonListScreen.route
                         ) {
                             BaseMVVMScreen<PokemonListViewModel> {
-                                PokemonListScreen(navController = navController, it)
+                                PokemonListScreen(gson, navController = navController, it)
                             }
                         }
                         composable(

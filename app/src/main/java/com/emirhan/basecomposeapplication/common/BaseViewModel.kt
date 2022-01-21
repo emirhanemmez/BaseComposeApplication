@@ -1,5 +1,6 @@
 package com.emirhan.basecomposeapplication.common
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.onEach
 
 open class BaseViewModel : ViewModel() {
     private val mutableBaseState = mutableStateOf(BaseState())
-    val baseState = mutableBaseState
+    val baseState: State<BaseState> = mutableBaseState
 
     fun <T> handleRequest(
         flow: Flow<Resource<T>>,

@@ -1,6 +1,5 @@
 package com.emirhan.basecomposeapplication.di
 
-import android.util.Log
 import com.emirhan.basecomposeapplication.common.Constants
 import com.emirhan.basecomposeapplication.data.remote.PokemonApi
 import com.emirhan.basecomposeapplication.data.repository.PokemonRepositoryImpl
@@ -15,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -25,7 +25,7 @@ object AppModule {
     @Singleton
     fun provideApi(): PokemonApi {
         val loggingInterceptor = HttpLoggingInterceptor {
-            Log.i("HttpClient", it)
+            Timber.tag("HttpClient").i(it)
         }.apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
