@@ -1,5 +1,6 @@
 package com.emirhan.basecomposeapplication.data.remote.dto
 
+import com.emirhan.basecomposeapplication.data.local.entity.PokemonEntity
 import com.emirhan.basecomposeapplication.domain.model.Pokemon
 import com.google.gson.annotations.SerializedName
 
@@ -31,6 +32,17 @@ data class Data(
     @SerializedName("tcgplayer") val tcgPlayer: Tcgplayer,
     val types: List<String>,
     val weaknesses: List<Weakness>
-)
+) {
+    fun toPokemon() = Pokemon(id = id, name = name, artistName = artist, hp = hp, images = images)
 
-fun Data.toPokemon() = Pokemon(id = id, name = name, artistName = artist, images = images)
+    fun toPokemonEntity() =
+        PokemonEntity(
+            id = id,
+            name = name,
+            artistName = artist,
+            hp = hp,
+            smallImage = images.small,
+            largeImage = images.large
+        )
+}
+

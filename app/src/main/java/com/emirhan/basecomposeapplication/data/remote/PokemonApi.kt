@@ -6,7 +6,9 @@ import retrofit2.http.Query
 
 interface PokemonApi {
     @GET("cards")
-    suspend fun getPokemons(
-        @Query("hp") hp: String
+    suspend fun getPokemonsByHp(
+        @Query("q", encoded = true) hp: String?,
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int
     ): GetPokemonsResponse
 }

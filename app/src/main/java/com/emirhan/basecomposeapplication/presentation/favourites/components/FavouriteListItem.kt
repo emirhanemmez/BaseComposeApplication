@@ -1,7 +1,6 @@
-package com.emirhan.basecomposeapplication.presentation.list.components
+package com.emirhan.basecomposeapplication.presentation.favourites.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -10,20 +9,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.emirhan.basecomposeapplication.data.remote.dto.Images
 import com.emirhan.basecomposeapplication.domain.model.Pokemon
 
 @Composable
-fun PokemonListItem(
-    pokemon: Pokemon,
-    onItemClick: (Pokemon) -> Unit,
-    onLongPress: (Pokemon) -> Unit
+fun FavouriteListItem(
+    pokemon: Pokemon
 ) {
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -36,19 +30,13 @@ fun PokemonListItem(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp)
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onPress = { },
-                        onTap = { onItemClick(pokemon) },
-                        onLongPress = { onLongPress(pokemon) }
-                    )
-                },
+                .padding(12.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
 
             Image(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .requiredHeight(200.dp),
                 contentScale = ContentScale.FillBounds,
                 painter = rememberImagePainter(pokemon.images.large),
@@ -65,11 +53,3 @@ fun PokemonListItem(
         }
     }
 }
-
-@Preview
-@Composable
-fun PokemonListItemPreview() = PokemonListItem(
-    pokemon = Pokemon("1", "Pikachu", "Ash", "99", Images("", "")),
-    onItemClick = {},
-    onLongPress = {}
-)

@@ -3,18 +3,19 @@ package com.emirhan.basecomposeapplication.presentation.list
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.emirhan.basecomposeapplication.presentation.Screen
-import com.emirhan.basecomposeapplication.presentation.list.components.PokemonListItem
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.emirhan.basecomposeapplication.util.Screen
+import com.emirhan.basecomposeapplication.presentation.list.components.PokemonList
 import com.emirhan.basecomposeapplication.presentation.list.components.SearchBar
 import com.google.gson.Gson
+import com.talhafaki.composablesweettoast.util.SweetToastUtil
 
+@ExperimentalPagingApi
 @ExperimentalFoundationApi
 @Composable
 fun PokemonListScreen(
@@ -22,9 +23,10 @@ fun PokemonListScreen(
     navController: NavController,
     viewModel: PokemonListViewModel
 ) {
-    val state = viewModel.state.value
+    val pokemonListItems = viewModel.searchedPokemons.collectAsLazyPagingItems()
+    val addedPokemonName = viewModel.addFavouriteState.value
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         SearchBar(
             hint = "Search pokemon",
             onSearch = {
@@ -32,20 +34,21 @@ fun PokemonListScreen(
             }
         )
 
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(2)
-        ) {
-            state.response?.let {
-                items(it) { pokemon ->
-                    PokemonListItem(
-                        pokemon = pokemon,
-                        onItemClick = {
-                            val json = Uri.encode(gson.toJson(pokemon))
-                            navController.navigate(Screen.PokemonDetailScreen.route + "/$json")
-                        }
-                    )
-                }
+        PokemonList(
+            pokemons = pokemonListItems,
+            onItemClick = { pokemon ->
+                val json = Uri.encode(gson.toJson(pokemon))
+                navController.navigate(Screen.PokemonDetailScreen.route + "/$json")
+            },
+            onLongItemClick = { pokemon ->
+                viewModel.addFavourite(pokemon)
             }
-        }
+        )
+    }
+
+    if (addedPokemonName.isNotEmpty()) {
+        SweetToastUtil.SweetSuccess(
+            message = "$addedPokemonName added to favourites!"
+        )
     }
 }

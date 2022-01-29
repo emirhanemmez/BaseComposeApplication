@@ -1,9 +1,13 @@
 package com.emirhan.basecomposeapplication.di
 
-import com.emirhan.basecomposeapplication.common.Constants
+import android.app.Application
+import androidx.paging.ExperimentalPagingApi
+import androidx.room.Room
+import com.emirhan.basecomposeapplication.data.local.PokemonDatabase
 import com.emirhan.basecomposeapplication.data.remote.PokemonApi
 import com.emirhan.basecomposeapplication.data.repository.PokemonRepositoryImpl
 import com.emirhan.basecomposeapplication.domain.repository.PokemonRepository
+import com.emirhan.basecomposeapplication.util.Constants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -20,6 +24,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun providePokemonDatabase(app: Application): PokemonDatabase {
+        return Room.databaseBuilder(
+            app,
+            PokemonDatabase::class.java,
+            PokemonDatabase.DATABASE_NAME
+        ).build()
+    }
 
     @Provides
     @Singleton
@@ -43,22 +57,11 @@ object AppModule {
 
     }
 
-    /*
+    @ExperimentalPagingApi
     @Provides
     @Singleton
-    fun providePokemonDatabase(app: Application): PokemonDatabase {
-        return Room.databaseBuilder(
-            app,
-            PokemonDatabase::class.java,
-            PokemonDatabase.DATABASE_NAME
-        ).build()
-    }
-     */
-
-    @Provides
-    @Singleton
-    fun providePokemonRepository(api: PokemonApi): PokemonRepository {
-        return PokemonRepositoryImpl(api)
+    fun providePokemonRepository(api: PokemonApi, db: PokemonDatabase): PokemonRepository {
+        return PokemonRepositoryImpl(api, db)
     }
 
     @Provides
