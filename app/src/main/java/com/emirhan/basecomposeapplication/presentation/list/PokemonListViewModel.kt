@@ -1,7 +1,7 @@
 package com.emirhan.basecomposeapplication.presentation.list
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
@@ -24,8 +24,8 @@ class PokemonListViewModel @Inject constructor(
     private val addFavouriteUseCase: AddFavouriteUseCase
 ) : BaseViewModel() {
 
-    private val _addFavouriteState = mutableStateOf<String>("")
-    val addFavouriteState: State<String> = _addFavouriteState
+    private val _addFavouriteLiveData = MutableLiveData<String>("")
+    val addFavouriteLiveData: LiveData<String> = _addFavouriteLiveData
 
     private val _searchedPokemons = MutableStateFlow<PagingData<Pokemon>>(PagingData.empty())
     val searchedPokemons: StateFlow<PagingData<Pokemon>> = _searchedPokemons
@@ -42,6 +42,10 @@ class PokemonListViewModel @Inject constructor(
 
     fun addFavourite(pokemon: Pokemon) =
         handleRequest(addFavouriteUseCase(pokemon), {
-            _addFavouriteState.value = pokemon.name
+            _addFavouriteLiveData.value = pokemon.name
         })
+
+    fun restoreFavouriteState() {
+        _addFavouriteLiveData.postValue(null)
+    }
 }

@@ -78,7 +78,7 @@ dependencies {
     // Compose
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
     implementation "com.google.accompanist:accompanist-flowlayout:0.17.0"
-    implementation 'androidx.compose.runtime:runtime-livedata:1.2.0-alpha02'
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:2.38.1"

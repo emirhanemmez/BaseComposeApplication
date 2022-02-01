@@ -3,6 +3,8 @@ package com.emirhan.basecomposeapplication.presentation.favourites
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.emirhan.basecomposeapplication.common.BaseResponseState
 import com.emirhan.basecomposeapplication.common.BaseViewModel
 import com.emirhan.basecomposeapplication.domain.model.Pokemon
@@ -17,9 +19,8 @@ class FavouritesViewModel @Inject constructor(
     private val removeFromFavouritesUseCase: RemoveFromFavouritesUseCase
 ) : BaseViewModel() {
 
-    private val _removeState = mutableStateOf<String>("")
-    val removeState: State<String> = _removeState
-
+    private val _removeState = MutableLiveData<String>()
+    val removeState: LiveData<String> = _removeState
 
     private val _favouriteListState: MutableState<BaseResponseState<List<Pokemon>>> =
         mutableStateOf(BaseResponseState())
@@ -44,5 +45,9 @@ class FavouritesViewModel @Inject constructor(
 
             _removeState.value = pokemon.name
         })
+    }
+
+    fun restoreRemoveState() {
+        _removeState.postValue(null)
     }
 }

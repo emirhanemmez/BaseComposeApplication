@@ -5,13 +5,15 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.emirhan.basecomposeapplication.util.Screen
 import com.emirhan.basecomposeapplication.presentation.list.components.PokemonList
 import com.emirhan.basecomposeapplication.presentation.list.components.SearchBar
+import com.emirhan.basecomposeapplication.util.Screen
 import com.google.gson.Gson
 import com.talhafaki.composablesweettoast.util.SweetToastUtil
 
@@ -24,7 +26,7 @@ fun PokemonListScreen(
     viewModel: PokemonListViewModel
 ) {
     val pokemonListItems = viewModel.searchedPokemons.collectAsLazyPagingItems()
-    val addedPokemonName = viewModel.addFavouriteState.value
+    val addedPokemonName by viewModel.addFavouriteLiveData.observeAsState(null)
 
     Column(modifier = Modifier.fillMaxWidth()) {
         SearchBar(
@@ -38,7 +40,9 @@ fun PokemonListScreen(
             pokemons = pokemonListItems,
             onItemClick = { pokemon ->
                 val json = Uri.encode(gson.toJson(pokemon))
-                navController.navigate(Screen.PokemonDetailScreen.route + "/$json")
+                navController.navigate(Screen.PokemonDetailScreen.route + "/$json") {
+                    restoreState = true
+                }
             },
             onLongItemClick = { pokemon ->
                 viewModel.addFavourite(pokemon)
@@ -46,9 +50,10 @@ fun PokemonListScreen(
         )
     }
 
-    if (addedPokemonName.isNotEmpty()) {
+    if (!addedPokemonName.isNullOrEmpty()) {
         SweetToastUtil.SweetSuccess(
             message = "$addedPokemonName added to favourites!"
         )
+        viewModel.restoreFavouriteState()
     }
 }
