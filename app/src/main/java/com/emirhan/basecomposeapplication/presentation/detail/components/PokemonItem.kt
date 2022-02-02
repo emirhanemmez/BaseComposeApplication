@@ -35,7 +35,7 @@ fun PokemonItem(pokemon: Pokemon) {
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .requiredHeight(200.dp),
+                    .requiredHeight(400.dp),
                 contentScale = ContentScale.FillBounds,
                 painter = rememberImagePainter(pokemon.images.large),
                 contentDescription = "Image of the pokemon"
@@ -45,6 +45,14 @@ fun PokemonItem(pokemon: Pokemon) {
                     .fillMaxWidth()
                     .padding(0.dp, 10.dp, 0.dp, 0.dp),
                 text = pokemon.name,
+                style = MaterialTheme.typography.body1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 10.dp, 0.dp, 0.dp),
+                text = pokemon.artistName,
                 style = MaterialTheme.typography.body1,
                 overflow = TextOverflow.Ellipsis
             )

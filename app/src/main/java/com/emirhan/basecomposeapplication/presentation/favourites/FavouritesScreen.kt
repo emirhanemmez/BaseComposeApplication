@@ -60,7 +60,7 @@ fun FavouritesScreen(
 
     if (!removedPokemon.isNullOrEmpty()) {
         SweetToastUtil.SweetSuccess(
-            message = "$removedPokemon removed from favourites"
+            message = "$removedPokemon is removed from favourites"
         )
         viewModel.restoreRemoveState()
     }
