@@ -67,7 +67,7 @@ fun EmptyListContent(
         ) {
             Text(
                 modifier = Modifier
-                    .padding(top = 10.dp)
+                    .padding(bottom = 56.dp)
                     .alpha(alpha = alphaAnim),
                 text = text,
                 color = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray,

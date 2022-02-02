@@ -70,9 +70,9 @@ fun <T : Any> EmptyPaginatedListContent(
         ) {
             Text(
                 modifier = Modifier
-                    .padding(top = 10.dp)
+                    .padding(bottom = 56.dp)
                     .alpha(alpha = alphaAnim),
-                text = "Try Again with swipe",
+                text = "No result",
                 color = if (isSystemInDarkTheme()) LightGray else DarkGray,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Medium,

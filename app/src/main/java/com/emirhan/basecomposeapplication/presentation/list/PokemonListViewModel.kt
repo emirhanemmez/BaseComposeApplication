@@ -30,10 +30,6 @@ class PokemonListViewModel @Inject constructor(
     private val _searchedPokemons = MutableStateFlow<PagingData<Pokemon>>(PagingData.empty())
     val searchedPokemons: StateFlow<PagingData<Pokemon>> = _searchedPokemons
 
-    init {
-        getPokemons()
-    }
-
     fun getPokemons(hp: String? = null) = viewModelScope.launch(Dispatchers.IO) {
         getPokemonsUseCase(hp).cachedIn(viewModelScope).collect {
             _searchedPokemons.value = it
