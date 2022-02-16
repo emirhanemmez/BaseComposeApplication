@@ -61,6 +61,5 @@ fun PokemonListScreen(
         SweetToastUtil.SweetSuccess(
             message = "$addedPokemonName is added to favourites!"
         )
-        viewModel.restoreFavouriteState()
     }
 }

@@ -39,9 +39,7 @@ class PokemonListViewModel @Inject constructor(
     fun addFavourite(pokemon: Pokemon) =
         handleRequest(addFavouriteUseCase(pokemon), {
             _addFavouriteLiveData.value = pokemon.name
+        }, onComplete = {
+            _addFavouriteLiveData.postValue(null)
         })
-
-    fun restoreFavouriteState() {
-        _addFavouriteLiveData.postValue(null)
-    }
 }

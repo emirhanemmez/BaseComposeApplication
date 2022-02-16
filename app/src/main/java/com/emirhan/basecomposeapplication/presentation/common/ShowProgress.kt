@@ -1,8 +1,6 @@
 package com.emirhan.basecomposeapplication.presentation.common
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,7 +12,9 @@ fun ShowProgress() {
     Box(modifier = Modifier.fillMaxSize()) {
         CircularProgressIndicator(
             modifier = Modifier
-                .align(Alignment.Center)
+                .height(50.dp)
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
                 .padding(bottom = 56.dp)
         )
     }

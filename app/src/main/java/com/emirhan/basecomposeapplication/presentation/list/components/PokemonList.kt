@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.emirhan.basecomposeapplication.domain.model.Pokemon
 import com.emirhan.basecomposeapplication.presentation.common.handlePagingResult

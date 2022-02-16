@@ -60,4 +60,10 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
             onComplete?.invoke()
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)
     }
+
+    fun handlePaginatedRequest(
+
+    ) {
+
+    }
 }
